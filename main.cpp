@@ -214,9 +214,12 @@ int main()
                 cout << endl << "U2 : " << u2.get();
                 u3 = u2;
                 cout << endl << "u2 about to be destroyed";
+                cout << endl << "Use count : " << u3.use_count();
             }
+            cout << endl << "Use count : " << u3.use_count();
             cout << endl << "u1 about to be destroyed";
         }
+        cout << endl << "Use count : " << u3.use_count();
         cout << endl << "u3 about to be destroyed";
     }
     cout << endl << "destroyed" << endl;

@@ -32,6 +32,7 @@ public: // functions
         ptr_ = obj.ptr_;
         deleter_ = obj.deleter_;
         ref_ = obj.ref_;
+        if(nullptr != ref_)
         ref_->increaserefcount();
     }
     MySharedPointer& operator=(const MySharedPointer& obj)
@@ -39,6 +40,7 @@ public: // functions
         ptr_ = obj.ptr_;
         deleter_ = obj.deleter_;
         ref_ = obj.ref_;
+        if(nullptr != ref_)
         ref_->increaserefcount();
     }
     MySharedPointer(MySharedPointer&& obj)
@@ -104,6 +106,13 @@ public: // functions
         temp.ptr_ = t;
         temp.deleter_ = d;
     }
+    uint32_t use_count()
+    {
+        if(nullptr != ref_)
+        return ref_->getrefcount();
+        else
+        return 0;
+    }
     private:
     T* ptr_{nullptr};
     CallBackDeleterType deleter_{nullptr};
@@ -111,26 +120,29 @@ public: // functions
 
     void DeleteMe()
     {
-        ref_->decreaserefcount();
-        if(0 == ref_->getrefcount())
+        if(nullptr != ref_)
         {
-            if(nullptr != deleter_)
+            ref_->decreaserefcount();
+            if(0 == ref_->getrefcount())
             {
-                if(nullptr != ptr_)
+                if(nullptr != deleter_)
                 {
-                    deleter_(ptr_);
+                    if(nullptr != ptr_)
+                    {
+                        deleter_(ptr_);
+                    }
                 }
-            }
-            else
-            {
-                if(nullptr != ptr_)
+                else
                 {
-                    delete ptr_;
-                    ptr_ = nullptr;
+                    if(nullptr != ptr_)
+                    {
+                        delete ptr_;
+                        ptr_ = nullptr;
+                    }
                 }
+                delete ref_;
+                ref_ = nullptr;
             }
-            delete ref_;
-            ref_ = nullptr;
         }
     }
 };
