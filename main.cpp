@@ -192,6 +192,14 @@ int main()
         cout << endl << "U2 : " << u2.get();
         cout << endl << "u1 about to be destroyed";
     }
+    {
+        cout << endl << "Array about to be created";
+        MyUniquePointer<Data> u1(new Data[3], [](Data* ptr)
+        {
+            cout << endl << "Custom deleter";
+            delete[] ptr;
+        });
+    }
     cout << endl << "destroyed" << endl;
 
     return 0;
