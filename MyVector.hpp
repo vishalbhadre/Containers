@@ -112,7 +112,7 @@ void MyVector<T>:: shrink_to_fit()
     if(size_ < capacity_ )
     {
         int size = sizeof(T)*size_;
-        T* temp = (T*) malloc(size);
+        T* temp = new T[size_];
 
         for(uint32_t i = 0; i < size_; i++)
         {

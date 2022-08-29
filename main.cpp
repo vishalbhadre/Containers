@@ -1,25 +1,49 @@
 #include <iostream>
 #include <vector>
-#include "containers/MyVector.hpp"
+#include "MyVector.hpp"
+#include "MyUniquePointer.hpp"
 
 using namespace std;
 
 class Data
 {
     int id;
-    string name;
     public:
-    Data():id(0), name(""){cout << endl << "Data constructor " << this;}
-    Data(int inputid, string inputname) : id(inputid), name(inputname){cout << endl << "Data param constructor " << this;}
+    Data():id(0){cout << endl << "Data constructor " << this;}
+    Data(int inputid) : id(inputid){cout << endl << "Data param constructor " << this;}
     Data(const Data& obj)
     {
         id = obj.id;
         cout << endl << "Data copy constructor " << this;
     }
-    ~Data(){cout << endl << "Data destructor " << this;}
+    Data& operator=(const Data& obj)
+    {
+        id = obj.id;
+        cout << endl << "Data copy assignment " << this;
+        return *this;
+    }
+    Data(Data&& obj) 
+    {
+        id = obj.id;
+
+        obj.id = 0;
+        cout << endl << "Data move constructor " << this;
+    }
+    Data& operator=(Data&& obj) 
+    {
+        id = obj.id;
+
+        obj.id = 0;
+        cout << endl << "Data move assignment " << this; 
+        return *this;
+    }
+    ~Data()
+    {
+        cout << endl << "Data destructor " << this;
+    }
     friend ostream& operator<<(ostream& os, Data& obj)
     {
-        os << obj.id << "  " << obj.name;
+        os << obj.id;
         return os;
     }
 };
@@ -33,21 +57,21 @@ int main()
 
         v.Reserve(5);
 
-        v.emplace_back(10, "vishal");
+        v.emplace_back(10);
         {
         cout << endl << "Vector : ";     
         for(uint32_t i = 0; i < v.size(); i++)
             cout << "\t" << v[i] << " " << &v[i];
         }
 
-        v.emplace_back(35, "tushar");
+        v.emplace_back(35);
         {
         cout << endl << "Vector : ";     
         for(uint32_t i = 0; i < v.size(); i++)
             cout << "\t" << v[i] << " " << &v[i];
         }
 
-        v.emplace_back(5, "ashish");
+        v.emplace_back(5);
         {
         cout << endl << "Vector : ";     
         for(uint32_t i = 0; i < v.size(); i++)
@@ -63,6 +87,7 @@ int main()
     }
     cout << endl;
     { 
+        cout << endl << "push and pop ";   
         // push and pop
         int ii = 10, j = 35;
         MyVector<int> v;
@@ -157,6 +182,17 @@ int main()
 
         cout << endl << "Size : " << v.size() << "\tCapacity : " << v.capacity();
     }
+    cout << endl <<"pointers" ;
+    {
+        cout << endl << "u1 about to be created";
+        MyUniquePointer<Data> u1 = make_my_unique<Data>(10);
+        cout << endl << "U1 : " << u1.get();
+        MyUniquePointer<Data> u2 = std::move(u1);
+        cout << endl << "U1 : " << u1.get();
+        cout << endl << "U2 : " << u2.get();
+        cout << endl << "u1 about to be destroyed";
+    }
+    cout << endl << "destroyed" << endl;
 
     return 0;
 }
