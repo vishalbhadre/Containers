@@ -2,6 +2,7 @@
 #include <vector>
 #include "MyVector.hpp"
 #include "MyUniquePointer.hpp"
+#include "MySharedPointer.hpp"
 
 using namespace std;
 
@@ -199,6 +200,24 @@ int main()
             cout << endl << "Custom deleter";
             delete[] ptr;
         });
+    }
+    
+    {
+        MySharedPointer<Data> u3;
+        {
+            cout << endl << "shared about to be created";
+            MySharedPointer<Data> u1 = make_my_shared<Data>(10);
+            cout << endl << "U1 : " << u1.get();
+            {
+                MySharedPointer<Data> u2 = u1;
+                cout << endl << "U1 : " << u1.get();
+                cout << endl << "U2 : " << u2.get();
+                u3 = u2;
+                cout << endl << "u2 about to be destroyed";
+            }
+            cout << endl << "u1 about to be destroyed";
+        }
+        cout << endl << "u3 about to be destroyed";
     }
     cout << endl << "destroyed" << endl;
 
