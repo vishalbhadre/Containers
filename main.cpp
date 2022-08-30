@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "MyVector.hpp"
+#include "MyForwardList.hpp"
+#include "MyArray.hpp"
 #include "MyUniquePointer.hpp"
 #include "MySharedPointer.hpp"
 
@@ -223,6 +225,31 @@ int main()
         cout << endl << "u3 about to be destroyed";
     }
     cout << endl << "destroyed" << endl;
+    {
+        MyForwardList<Data> l1;
+        l1.push_front(10);
+        l1.push_front(15);
+        l1.push_front(20);
+        l1.push_front(45);
+
+        l1.Reverse();
+
+        cout << endl << l1.front();
+        l1.pop_front();
+        cout << endl << l1.front();
+        l1.pop_front();
+        cout << endl << l1.front();
+        l1.pop_front();
+        cout << endl << l1.front();
+        l1.pop_front();
+    }
+    {
+        MyArray<Data, 5> arr = {10,16,20,25,30};
+        cout << endl << "Array : ";
+        for(uint32_t i = 0; i < arr.size(); i++)
+        cout << arr[i] << "\t";
+
+    }
 
     return 0;
 }

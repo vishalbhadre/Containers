@@ -42,6 +42,7 @@ public: // functions
         ref_ = obj.ref_;
         if(nullptr != ref_)
         ref_->increaserefcount();
+	return *this;
     }
     MySharedPointer(MySharedPointer&& obj)
     {
