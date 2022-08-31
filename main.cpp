@@ -2,6 +2,7 @@
 #include <vector>
 #include "MyVector.hpp"
 #include "MyForwardList.hpp"
+#include "MyList.hpp"
 #include "MyArray.hpp"
 #include "MyUniquePointer.hpp"
 #include "MySharedPointer.hpp"
@@ -248,6 +249,27 @@ int main()
         cout << endl << "Array : ";
         for(uint32_t i = 0; i < arr.size(); i++)
         cout << arr[i] << "\t";
+    }
+    {
+        MyList<Data> l1;
+        l1.push_front(11);
+        l1.push_front(16);
+        l1.push_front(21);
+        l1.push_front(46);
+
+        l1.pop_front();
+        l1.push_back(201);
+        l1.push_back(301);        
+        l1.pop_front();
+        l1.push_back(401);
+        l1.pop_front();      
+        l1.push_back(501);
+
+        l1.pop_back();
+        l1.pop_back();
+        l1.pop_back();
+        l1.pop_back();
+        l1.pop_back();
 
     }
 
