@@ -210,17 +210,22 @@ int main()
         {
             cout << endl << "shared about to be created";
             MySharedPointer<Data> u1 = make_my_shared<Data>(10);
+            MySharedPointer<Data> u4 = make_my_shared<Data>(20);
             cout << endl << "U1 : " << u1.get();
+            cout << endl << "U4 : " << u4.get();
             {
                 MySharedPointer<Data> u2 = u1;
+                u4 = u2;
                 cout << endl << "U1 : " << u1.get();
                 cout << endl << "U2 : " << u2.get();
+                cout << endl << "U4 : " << u4.get();
                 u3 = u2;
                 cout << endl << "u2 about to be destroyed";
                 cout << endl << "Use count : " << u3.use_count();
             }
-            cout << endl << "Use count : " << u3.use_count();
-            cout << endl << "u1 about to be destroyed";
+            cout << endl << "Use count u3 : " << u3.use_count();
+            cout << endl << "u1 & u4 about to be destroyed";
+            cout << endl << "Use count u4 : " << u4.use_count();
         }
         cout << endl << "Use count : " << u3.use_count();
         cout << endl << "u3 about to be destroyed";

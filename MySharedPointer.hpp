@@ -24,6 +24,7 @@ public: // functions
     {
         ptr_ = temp;
         deleter_ = call;
+
         if(nullptr != ptr_)
         ref_ = new Counter();
     }
@@ -32,17 +33,24 @@ public: // functions
         ptr_ = obj.ptr_;
         deleter_ = obj.deleter_;
         ref_ = obj.ref_;
+
         if(nullptr != ref_)
         ref_->increaserefcount();
     }
     MySharedPointer& operator=(const MySharedPointer& obj)
     {
-        ptr_ = obj.ptr_;
-        deleter_ = obj.deleter_;
-        ref_ = obj.ref_;
-        if(nullptr != ref_)
-        ref_->increaserefcount();
-	return *this;
+        if(this != &obj)
+        {
+            DeleteMe();
+
+            ptr_ = obj.ptr_;
+            deleter_ = obj.deleter_;
+            ref_ = obj.ref_;
+
+            if(nullptr != ref_)
+            ref_->increaserefcount();
+        }
+	    return *this;
     }
     MySharedPointer(MySharedPointer&& obj)
     {
@@ -56,13 +64,18 @@ public: // functions
     }
     MySharedPointer& operator=(const MySharedPointer&& obj)
     {
-        ptr_ = obj.ptr_;
-        deleter_ = obj.deleter_;
-        ref_ = obj.ref_;
+        if(this != &obj)
+        {
+            DeleteMe();
+            
+            ptr_ = obj.ptr_;
+            deleter_ = obj.deleter_;
+            ref_ = obj.ref_;
 
-        obj.ptr_ = nullptr;
-        obj.deleter_ = nullptr;
-        obj.ref_ = nullptr;
+            obj.ptr_ = nullptr;
+            obj.deleter_ = nullptr;
+            obj.ref_ = nullptr;
+        }
         return *this;
     }
     ~MySharedPointer()
