@@ -55,7 +55,7 @@ class Data
 
 int main()
 {   
-    cout << endl << "main edited on 28-Feb-2023... " << this;
+    cout << endl << "main edited on 28-Feb-2023... " << endl ;
     /*{ 
         // Emplace
         MyVector<Data> v;
