@@ -56,7 +56,7 @@ class Data
 int main()
 {   
     cout << endl << "main edited on 04-Mar-2023... " << endl ;
-    /*{ 
+    { 
         // Emplace
         MyVector<Data> v;
 
@@ -277,7 +277,7 @@ int main()
         l1.pop_back();
         l1.pop_back();
 
-    }*/
+    }
 
     return 0;
 }
